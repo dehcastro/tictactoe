@@ -7,14 +7,19 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  :root {
+    width: 100%;
+    height: 100%;
+  }
+
   body {
     font-family: 'Ubuntu Mono', sans-serif;
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.purple[200]};
     background: linear-gradient(
       90deg,
-      ${({ theme }) => theme.colors.purple[600]} 0%,
-      ${({ theme }) => theme.colors.purple[500]} 100%
+      ${({ theme }) => theme.colors.purple[500]} 0%,
+      ${({ theme }) => theme.colors.purple[600]} 100%
     );
   }
 `
