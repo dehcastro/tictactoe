@@ -8,10 +8,6 @@ export const theme = {
       600: '#7158e2',
       700: '#684cc7',
     },
-    orange: {
-      400: '#ffaf40',
-      500: '#ff9f1a',
-    },
     red: {
       400: '#ff4d4d',
       500: '#ff3838',
