@@ -80,6 +80,10 @@ export const Cell = styled.div<CellProps>`
     box-shadow: 0 0 30px ${({ theme }) => theme.colors.purple[600]};
   }
 
+  &:not(:empty) {
+    pointer-events: none;
+  }
+
   ${({ gameEnded }) =>
     gameEnded &&
     css`
