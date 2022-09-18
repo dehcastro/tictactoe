@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FiX, FiCircle } from 'react-icons/fi'
+import { theme } from '../../styles/theme'
 import {
   GameContainer,
   Main,
@@ -9,9 +10,15 @@ import {
   Board,
   Cell,
   ResetButton,
+  Score,
+  Player,
+  Points,
 } from './styles'
 
-const INITIAL_BOARD_STATE = ['', '', '', '', '', '', '', '', '']
+type BoardStateType = '' | 'x' | 'circle'
+
+const INITIAL_BOARD_STATE: Array<BoardStateType> = Array(9).fill('')
+
 const WIN_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -24,8 +31,9 @@ const WIN_COMBINATIONS = [
 ]
 
 export const Game = () => {
-  const [board, setBoard] = useState(INITIAL_BOARD_STATE)
-  const [currentPlayer, setCurrentPlayer] = useState('x')
+  const [board, setBoard] = useState<BoardStateType[]>(INITIAL_BOARD_STATE)
+  const [currentPlayer, setCurrentPlayer] = useState<'x' | 'circle'>('x')
+  const [score, setScore] = useState({ x: 0, circle: 0 })
   const [gameEnded, setGameEnded] = useState(false)
 
   const changeCurrentPlayer = () => {
@@ -48,6 +56,9 @@ export const Game = () => {
     })
 
     if (thereIsAWinner) {
+      const newScore = { ...score, [currentPlayer]: score[currentPlayer] + 1 }
+      setScore(newScore)
+
       setTimeout(() => {
         window.alert(`${currentPlayer} is the winner`)
       }, 10)
@@ -98,10 +109,17 @@ export const Game = () => {
         <TopText>
           <Title>Tic Tac Toe</Title>
 
-          <CurrentPlayer>
-            Current Player: <br />
-            {currentPlayer}
-          </CurrentPlayer>
+          <Score>
+            <Player>
+              x: <Points player="x">{score.x}</Points>
+            </Player>
+
+            <Player>
+              circle: <Points player="circle">{score.circle}</Points>
+            </Player>
+          </Score>
+
+          <CurrentPlayer>Current Player: {currentPlayer}</CurrentPlayer>
         </TopText>
 
         <Board>
@@ -109,10 +127,12 @@ export const Game = () => {
             <Cell
               key={index}
               onClick={() => handlePlayerClick(index)}
-              {...{ player, gameEnded }}
+              {...{ gameEnded }}
             >
-              {player === 'x' && <FiX />}
-              {player === 'circle' && <FiCircle />}
+              {player === 'x' && <FiX color={theme.colors.red[400]} />}
+              {player === 'circle' && (
+                <FiCircle color={theme.colors.blue[500]} />
+              )}
             </Cell>
           ))}
         </Board>

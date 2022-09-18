@@ -10,7 +10,7 @@ export const Main = styled.main`
 
 export const GameContainer = styled.div`
   max-width: 62rem;
-  height: 50rem;
+  height: 52rem;
 
   display: flex;
   flex-direction: column;
@@ -25,6 +25,34 @@ export const Title = styled.h1`
   font-size: 5rem;
   margin-bottom: 1.2rem;
 `
+
+export const Score = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.purple[700]};
+`
+
+export const Player = styled.div`
+  & + & {
+    margin-left: 2rem;
+  }
+`
+
+interface PointsProps {
+  player: 'x' | 'circle'
+}
+
+export const Points = styled.span<PointsProps>`
+  color: ${({ theme, player }) =>
+    player === 'x' ? theme.colors.red[400] : theme.colors.blue[500]};
+`
+
 export const CurrentPlayer = styled.p`
   text-align: center;
   font-size: 2rem;
@@ -39,7 +67,6 @@ export const Board = styled.div`
 `
 
 interface CellProps {
-  player: string
   gameEnded: boolean
 }
 
@@ -51,8 +78,6 @@ export const Cell = styled.div<CellProps>`
   cursor: pointer;
   background-color: #fff;
   transition: all 0.1s;
-  color: ${({ theme, player }) =>
-    player === 'x' ? theme.colors.red[400] : theme.colors.blue[500]};
   font-size: 6rem;
 
   &::selection {
